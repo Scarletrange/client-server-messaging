@@ -1,0 +1,33 @@
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashMap;
+
+/**
+ *
+ * @author Matt
+ */
+public class ServerSystem {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static Socket socket;
+    public static String line="   ";
+    public static String outputLine="";
+    public static long identityOfMessage;
+    public static HashMap usernames=new HashMap();
+    public static long identityOfSender;
+    public static void main(String[] args) {
+        try{
+            ServerSocket server=new ServerSocket(5000);
+            while(true){
+                socket=server.accept();
+                Thread acceptance = new Thread(new ServerAcceptance(socket)); 
+                acceptance.start();
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    
+}
