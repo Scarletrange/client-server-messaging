@@ -1,0 +1,42 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+
+/**
+ *
+ * @author Matt
+ */
+public class ClientSystem {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static Socket socket;
+    public static String line="";
+    public static void main(String[] args) {
+        // TODO code application logic here
+        try{//127.0.0.1          192.168.137.1
+            socket=new Socket("127.0.0.1", 5000);
+            DataInputStream input= new DataInputStream(System.in);
+            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+            DataInputStream in=new DataInputStream(socket.getInputStream());
+            
+            
+            Thread object = new Thread(new ClientRead()); 
+            object.start(); 
+            while(line.equals("quit")==false){
+                //line=input.readLine();
+                //output.writeUTF(line);
+                String inp=in.readUTF();
+                System.out.println(inp);
+                
+            }
+            input.close();
+            output.close();
+            socket.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    
+}
