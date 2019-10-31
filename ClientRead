@@ -1,0 +1,27 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
+/**
+ *
+ * @author Matt
+ */
+
+public class ClientRead implements Runnable{
+    public void run(){
+        try{
+        DataOutputStream output = new DataOutputStream(ClientSystem.socket.getOutputStream());
+        DataInputStream input= new DataInputStream(System.in);
+        
+        while(ClientSystem.line.equals("quit")==false){
+            
+            //System.out.println("there");
+            ClientSystem.line=input.readLine();
+                output.writeUTF(ClientSystem.line);
+        }
+        output.close();
+        input.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+}
